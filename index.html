@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colchester Wine Club — Wine for Real People</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a0e0a; --ruby: #8b1a2e; --ruby-deep: #5c0f1d;
+    --blush: #f2d5c8; --sand: #f7f0e6; --amber: #d4832a; --amber-lt: #f0b050;
+    --sage: #3d5c3a; --cream: #fdf8f2; --muted: #8a6a5e; --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+  body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9998; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); opacity:1; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; justify-content:space-between; padding:1.1rem 5%; background:rgba(92,15,29,0.97); backdrop-filter:blur(20px); border-bottom:1px solid rgba(212,131,42,0.25); }
+  .logo-wrap { display:flex; align-items:center; gap:0.9rem; text-decoration:none; }
+  .logo-icon { width:38px; height:38px; border-radius:50%; border:1.5px solid var(--amber); display:flex; align-items:center; justify-content:center; font-size:1.1rem; background:rgba(212,131,42,0.1); }
+  .logo-text { font-family:'Fraunces',serif; font-size:1.15rem; font-weight:700; color:var(--white); line-height:1.1; }
+  .logo-text small { display:block; font-family:'DM Sans',sans-serif; font-size:0.56rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:var(--amber); margin-top:1px; }
+  .nav-links { display:flex; gap:2.2rem; list-style:none; }
+  .nav-links a { text-decoration:none; color:rgba(255,255,255,0.7); font-size:0.8rem; letter-spacing:0.07em; text-transform:uppercase; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--amber-lt); }
+  .nav-cta { background:var(--amber); color:var(--ink); padding:0.55rem 1.3rem; border-radius:30px; font-weight:600; font-size:0.8rem; text-decoration:none; transition:all 0.2s; white-space:nowrap; }
+  .nav-cta:hover { background:var(--amber-lt); transform:translateY(-1px); }
+
+  .hero { min-height:100vh; background:var(--ruby-deep); display:flex; align-items:center; position:relative; overflow:hidden; padding:9rem 5% 5rem; }
+  .hero-shapes { position:absolute; inset:0; overflow:hidden; }
+  .shape { position:absolute; border-radius:50%; filter:blur(90px); opacity:0.18; }
+  .s1 { width:700px; height:700px; background:var(--ruby); top:-200px; right:-150px; animation:drift1 12s ease-in-out infinite; }
+  .s2 { width:450px; height:450px; background:var(--amber); bottom:-100px; left:5%; animation:drift2 15s ease-in-out infinite; }
+  .s3 { width:350px; height:350px; background:#c04060; top:40%; left:40%; animation:drift1 10s ease-in-out infinite reverse; }
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)scale(1)} 50%{transform:translate(30px,-40px)scale(1.06)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-25px,30px)} }
+
+  .hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; max-width:1200px; width:100%; align-items:center; margin:0 auto; }
+  .hero-pill { display:inline-flex; align-items:center; gap:0.55rem; border:1px solid rgba(212,131,42,0.5); background:rgba(212,131,42,0.1); padding:0.4rem 1rem; border-radius:30px; margin-bottom:1.8rem; }
+  .hero-pill span { font-size:0.7rem; color:var(--amber-lt); letter-spacing:0.18em; text-transform:uppercase; font-weight:500; }
+  .hero-pill::before { content:''; width:7px; height:7px; background:var(--amber); border-radius:50%; animation:blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+  h1 { font-family:'Fraunces',serif; font-weight:900; font-size:clamp(3.2rem,6.5vw,5.8rem); line-height:1.0; color:var(--white); margin-bottom:1.6rem; }
+  h1 em { font-style:italic; color:var(--amber-lt); }
+  .hero-sub { font-size:1.08rem; line-height:1.75; color:rgba(255,255,255,0.6); max-width:480px; margin-bottom:2.8rem; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary { background:var(--amber); color:var(--ink); padding:0.95rem 2.2rem; border-radius:40px; font-weight:700; font-size:0.9rem; text-decoration:none; transition:all 0.25s; display:inline-block; box-shadow:0 4px 20px rgba(212,131,42,0.35); }
+  .btn-primary:hover { background:var(--amber-lt); transform:translateY(-3px); }
+  .btn-outline { background:transparent; color:rgba(255,255,255,0.85); padding:0.95rem 2.2rem; border-radius:40px; font-weight:500; font-size:0.9rem; text-decoration:none; border:1.5px solid rgba(255,255,255,0.25); transition:all 0.25s; }
+  .btn-outline:hover { border-color:var(--amber-lt); color:var(--amber-lt); }
+
+  .hero-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2.5rem; backdrop-filter:blur(16px); }
+  .hc-label { font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:1.5rem; }
+  .hc-stats { display:flex; flex-direction:column; gap:1.3rem; }
+  .hc-stat { display:flex; align-items:center; gap:1rem; }
+  .hc-icon { width:46px; height:46px; border-radius:12px; background:rgba(212,131,42,0.15); border:1px solid rgba(212,131,42,0.3); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .hc-stat-label { font-size:0.72rem; color:rgba(255,255,255,0.45); }
+  .hc-stat-val { font-size:0.98rem; color:var(--white); font-weight:600; }
+  .hc-divider { height:1px; background:rgba(255,255,255,0.07); }
+  .hc-quote { font-family:'Fraunces',serif; font-style:italic; font-size:1rem; color:rgba(255,255,255,0.55); line-height:1.6; margin-top:1.2rem; }
+
+  .hero-scroll { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:rgba(255,255,255,0.25); font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; animation:bobble 2.5s ease-in-out infinite; }
+  @keyframes bobble { 0%,100%{transform:translateX(-50%)translateY(0)} 50%{transform:translateX(-50%)translateY(7px)} }
+  .hero-scroll::after { content:'↓'; font-size:1.1rem; }
+
+  .ticker { background:var(--amber); overflow:hidden; padding:0.8rem 0; }
+  .ticker-track { display:flex; gap:3rem; animation:tick 25s linear infinite; width:max-content; }
+  @keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .ticker-item { font-size:0.78rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); white-space:nowrap; display:flex; align-items:center; gap:0.6rem; }
+  .ticker-dot { width:5px; height:5px; background:var(--ruby); border-radius:50%; }
+
+  section { padding:6.5rem 5%; }
+  .max-w { max-width:1200px; margin:0 auto; }
+  .sec-label { font-size:0.68rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--amber); font-weight:600; margin-bottom:0.7rem; }
+  h2 { font-family:'Fraunces',serif; font-weight:700; font-size:clamp(2rem,4vw,3rem); line-height:1.12; color:var(--ink); }
+  .sec-intro { font-size:1rem; line-height:1.78; color:var(--muted); max-width:540px; margin-top:0.9rem; }
+
+  .about-wrap { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; margin-top:1rem; }
+  .about-big-card { background:var(--ruby-deep); border-radius:20px; padding:3.5rem 3rem; position:relative; overflow:hidden; }
+  .about-big-card::before { content:''; position:absolute; top:-60px; right:-60px; width:250px; height:250px; border-radius:50%; background:radial-gradient(circle,rgba(212,131,42,0.25),transparent 70%); }
+  .big-wine-emoji { font-size:5rem; display:block; margin-bottom:1.5rem; position:relative; z-index:1; }
+  .about-quote { font-family:'Fraunces',serif; font-style:italic; font-size:1.5rem; color:var(--white); line-height:1.5; position:relative; z-index:1; }
+  .about-quote span { color:var(--amber-lt); }
+  .about-float { position:absolute; bottom:-1.5rem; right:-1.5rem; background:var(--amber); border-radius:12px; padding:1rem 1.3rem; box-shadow:0 8px 30px rgba(0,0,0,0.2); z-index:2; }
+  .about-float p { font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink); }
+  .about-float strong { display:block; font-family:'Fraunces',serif; font-size:1.4rem; color:var(--ruby-deep); }
+  .about-visual { position:relative; }
+  .about-points { display:flex; flex-direction:column; gap:2rem; margin-top:2.5rem; }
+  .ap { display:flex; gap:1.2rem; align-items:flex-start; }
+  .ap-icon { width:42px; height:42px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .ap-icon.ruby { background:rgba(139,26,46,0.1); }
+  .ap-icon.amber { background:rgba(212,131,42,0.12); }
+  .ap-icon.sage { background:rgba(61,92,58,0.1); }
+  .ap h4 { font-family:'Fraunces',serif; font-size:1.1rem; font-weight:700; margin-bottom:0.3rem; }
+  .ap p { font-size:0.875rem; line-height:1.7; color:var(--muted); }
+
+  .wines-bg { background:var(--ruby-deep); }
+  .wines-bg h2 { color:var(--white); }
+  .wines-bg .sec-label { color:rgba(212,131,42,0.8); }
+  .wines-bg .sec-intro { color:rgba(255,255,255,0.5); }
+  .partner-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:3rem; margin-top:2.5rem; display:grid; grid-template-columns:1fr 1.4fr; gap:3rem; align-items:center; }
+  .partner-logo-area { text-align:center; border-right:1px solid rgba(255,255,255,0.08); padding-right:3rem; }
+  .partner-emoji { font-size:5rem; display:block; margin-bottom:1.2rem; }
+  .partner-name { font-family:'Fraunces',serif; font-size:2.2rem; font-weight:900; color:var(--white); margin-bottom:0.4rem; }
+  .partner-location { font-size:0.78rem; color:var(--amber); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; }
+  .partner-desc { font-size:0.95rem; line-height:1.75; color:rgba(255,255,255,0.55); margin-bottom:2rem; }
+  .partner-contacts { display:flex; flex-direction:column; gap:1rem; margin-bottom:2rem; }
+  .partner-contact { display:flex; align-items:center; gap:1rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem 1.2rem; transition:all 0.3s; }
+  .partner-contact:hover { border-color:rgba(212,131,42,0.4); background:rgba(212,131,42,0.08); }
+  .pc-icon { width:44px; height:44px; border-radius:10px; background:rgba(212,131,42,0.15); border:1px solid rgba(212,131,42,0.3); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .pc-label { font-size:0.65rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:2px; }
+  .pc-name { font-size:1rem; font-weight:700; color:var(--white); font-family:'Fraunces',serif; }
+  .pc-role { font-size:0.75rem; color:var(--amber); }
+  .partner-cta { display:inline-flex; align-items:center; gap:0.6rem; background:var(--amber); color:var(--ink); padding:0.85rem 1.8rem; border-radius:30px; text-decoration:none; font-weight:700; font-size:0.88rem; transition:all 0.25s; }
+  .partner-cta:hover { background:var(--amber-lt); transform:translateY(-2px); }
+  @media (max-width:760px) { .partner-card { grid-template-columns:1fr; gap:2rem; } .partner-logo-area { border-right:none; padding-right:0; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:2rem; } }
+
+  .how-bg { background:var(--blush); }
+  .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .step-card { background:var(--white); border-radius:16px; padding:2rem 1.6rem; border:1px solid rgba(139,26,46,0.08); transition:all 0.3s; position:relative; overflow:hidden; }
+  .step-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--ruby),var(--amber)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .step-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(139,26,46,0.12); }
+  .step-card:hover::after { transform:scaleX(1); }
+  .step-num { font-family:'Fraunces',serif; font-size:4rem; font-weight:900; color:rgba(139,26,46,0.07); line-height:1; margin-bottom:1rem; }
+  .step-icon { font-size:1.8rem; margin-bottom:0.8rem; display:block; }
+  .step-card h3 { font-family:'Fraunces',serif; font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; }
+  .step-card p { font-size:0.84rem; line-height:1.68; color:var(--muted); }
+
+  .events-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+  .event-card { border-radius:14px; overflow:hidden; border:1px solid rgba(139,26,46,0.1); transition:all 0.3s; background:white; }
+  .event-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(139,26,46,0.12); }
+  .event-top { background:var(--ruby-deep); padding:1.5rem; display:flex; gap:1rem; align-items:center; }
+  .event-date { background:var(--amber); border-radius:10px; padding:0.5rem 0.8rem; text-align:center; flex-shrink:0; min-width:54px; }
+  .event-date .day { font-family:'Fraunces',serif; font-size:1.8rem; line-height:1; font-weight:900; color:var(--ink); }
+  .event-date .mon { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--ruby-deep); }
+  .event-title { font-family:'Fraunces',serif; font-size:1.1rem; color:white; font-weight:700; }
+  .event-subtitle { font-size:0.76rem; color:rgba(255,255,255,0.5); margin-top:0.2rem; }
+  .event-body { padding:1.3rem; }
+  .event-body p { font-size:0.85rem; line-height:1.68; color:var(--muted); margin-bottom:1rem; }
+  .event-meta { display:flex; gap:1rem; flex-wrap:wrap; }
+  .event-meta span { font-size:0.72rem; font-weight:600; color:var(--ruby); display:flex; align-items:center; gap:0.3rem; }
+  .event-price-tag { color:var(--amber) !important; }
+  .events-footer { text-align:center; margin-top:2rem; }
+  .events-footer p { font-size:0.875rem; color:var(--muted); }
+  .events-footer a { color:var(--ruby); font-weight:600; text-decoration:none; }
+  .events-footer a:hover { text-decoration:underline; }
+
+  .insta-bg { background:var(--ruby-deep); }
+  .insta-bg h2 { color:var(--white); }
+  .insta-bg .sec-label { color:rgba(212,131,42,0.8); }
+  .insta-bg .sec-intro { color:rgba(255,255,255,0.5); }
+  .insta-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem; }
+  .insta-follow-btn { display:inline-flex; align-items:center; gap:0.6rem; background:linear-gradient(135deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%); color:white; padding:0.7rem 1.6rem; border-radius:30px; text-decoration:none; font-weight:600; font-size:0.82rem; transition:opacity 0.2s; }
+  .insta-follow-btn:hover { opacity:0.85; }
+  .insta-mosaic { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(2,180px); gap:1rem; }
+  .insta-tile { border-radius:12px; overflow:hidden; position:relative; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-size:3.5rem; cursor:pointer; transition:all 0.3s; }
+  .insta-tile.wide { grid-column:span 2; }
+  .insta-tile.tall { grid-row:span 2; font-size:5rem; }
+  .insta-tile:hover { border-color:rgba(212,131,42,0.5); transform:scale(1.02); }
+  .insta-tile::after { content:'View on Instagram →'; position:absolute; inset:0; background:rgba(92,15,29,0.88); display:flex; align-items:center; justify-content:center; color:white; font-size:0.75rem; font-weight:600; letter-spacing:0.05em; opacity:0; transition:opacity 0.2s; border-radius:12px; }
+  .insta-tile:hover::after { opacity:1; }
+  .insta-handle { text-align:center; margin-top:2rem; font-family:'Fraunces',serif; font-size:1.1rem; color:rgba(255,255,255,0.35); font-style:italic; }
+  .insta-handle a { color:var(--amber-lt); text-decoration:none; transition:color 0.2s; }
+  .insta-handle a:hover { color:white; }
+
+  .join-bg { background:var(--amber); position:relative; overflow:hidden; }
+  .join-bg::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; border-radius:50%; background:rgba(255,255,255,0.12); }
+  .join-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  .join-inner h2 { font-size:clamp(2.2rem,4.5vw,3.5rem); color:var(--ruby-deep); }
+  .join-inner p { font-size:1rem; line-height:1.72; color:rgba(92,15,29,0.65); margin-top:1rem; }
+  .join-actions { display:flex; flex-direction:column; gap:1rem; }
+  .join-btn-dark { background:var(--ruby-deep); color:white; padding:1rem 2rem; border-radius:40px; font-weight:700; font-size:0.95rem; text-decoration:none; text-align:center; transition:all 0.25s; display:block; }
+  .join-btn-dark:hover { background:var(--ink); transform:translateY(-2px); }
+  .join-btn-light { background:rgba(255,255,255,0.35); color:var(--ruby-deep); padding:1rem 2rem; border-radius:40px; font-weight:600; font-size:0.95rem; text-decoration:none; text-align:center; transition:all 0.25s; border:1.5px solid rgba(92,15,29,0.2); display:block; }
+  .join-btn-light:hover { background:rgba(255,255,255,0.5); }
+  .join-note { font-size:0.75rem; color:rgba(92,15,29,0.5); text-align:center; }
+
+  footer { background:var(--ink); padding:4rem 5% 2.5rem; }
+  .footer-top { display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .footer-brand p { font-size:0.84rem; line-height:1.72; color:rgba(255,255,255,0.32); max-width:270px; margin-bottom:1.2rem; }
+  .footer-social a { display:inline-flex; align-items:center; gap:0.5rem; background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); color:white; padding:0.5rem 1rem; border-radius:20px; font-size:0.78rem; font-weight:600; text-decoration:none; transition:opacity 0.2s; }
+  .footer-social a:hover { opacity:0.8; }
+  .footer-col h4 { font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--amber); font-weight:700; margin-bottom:1rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.55rem; }
+  .footer-col ul a { font-size:0.84rem; color:rgba(255,255,255,0.32); text-decoration:none; transition:color 0.2s; }
+  .footer-col ul a:hover { color:var(--white); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:1.8rem; flex-wrap:wrap; gap:1rem; }
+  .footer-bottom p { font-size:0.75rem; color:rgba(255,255,255,0.2); }
+  .age-notice { font-size:0.7rem; color:rgba(255,255,255,0.18); max-width:400px; text-align:right; }
+
+  @media (max-width:960px) {
+    .hero-inner { grid-template-columns:1fr; } .hero-card { display:none; }
+    .about-wrap { grid-template-columns:1fr; gap:2.5rem; } .footer-top { grid-template-columns:1fr 1fr; gap:2rem; }
+    .join-inner { grid-template-columns:1fr; gap:2rem; } .nav-links { display:none; }
+    .insta-mosaic { grid-template-columns:repeat(2,1fr); grid-template-rows:auto; }
+    .insta-tile.wide,.insta-tile.tall { grid-column:span 1; grid-row:span 1; }
+  }
+  @media (max-width:600px) { .footer-top { grid-template-columns:1fr; } .hero-btns { flex-direction:column; } }
+
+  .reveal { opacity:0; transform:translateY(22px); transition:opacity 0.7s ease,transform 0.7s ease; }
+  .reveal.in { opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo-wrap">
+    <div class="logo-icon">🍷</div>
+    <div class="logo-text">Colchester Wine Club<small>Essex · No Snobbery Allowed</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#wines">Get the Wines</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#insta">Instagram</a></li>
+  </ul>
+  <a href="#join" class="nav-cta">Join the Club 🍇</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-shapes">
+    <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-pill"><span>🍇 Colchester's friendliest wine club</span></div>
+      <h1>Wine for <em>Real People.</em><br>In Real Essex.</h1>
+      <p class="hero-sub">No pretension. No lectures. No one judging your pronunciation of Gewürztraminer. Just great wine, great people, and brilliant nights out in Colchester.</p>
+      <div class="hero-btns">
+        <a href="#events" class="btn-primary">🎉 See Upcoming Events</a>
+        <a href="#about" class="btn-outline">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-label">Why Join?</div>
+      <div class="hc-stats">
+        <div class="hc-stat"><div class="hc-icon">🗺️</div><div><div class="hc-stat-label">What we do</div><div class="hc-stat-val">Monthly curated wine picks</div></div></div>
+        <div class="hc-divider"></div>
+        <div class="hc-stat"><div class="hc-icon">🎉</div><div><div class="hc-stat-label">Community</div><div class="hc-stat-val">Regular events in Colchester</div></div></div>
+        <div class="hc-divider"></div>
+        <div class="hc-stat"><div class="hc-icon">📍</div><div><div class="hc-stat-label">Based in</div><div class="hc-stat-val">Colchester, Essex</div></div></div>
+        <div class="hc-divider"></div>
+        <div class="hc-stat"><div class="hc-icon">🤓</div><div><div class="hc-stat-label">Snobbery level</div><div class="hc-stat-val">Absolutely zero. Guaranteed.</div></div></div>
+      </div>
+      <div class="hc-quote">"The best wine is the one you're enjoying right now."</div>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>Colchester's Wine Club</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>No Snobbery Allowed</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Monthly Wine Picks</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Regular Events</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Based in Essex</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Red White &amp; Rosé</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Fun Not Fussy</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Colchester's Wine Club</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>No Snobbery Allowed</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Monthly Wine Picks</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Regular Events</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Based in Essex</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Red White &amp; Rosé</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Fun Not Fussy</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="max-w">
+    <div class="about-wrap">
+      <div class="reveal">
+        <div class="about-visual">
+          <div class="about-big-card">
+            <span class="big-wine-emoji">🍷</span>
+            <p class="about-quote">Wine shouldn't be <span>scary.</span> It should be <span>Saturday night.</span></p>
+          </div>
+          <div class="about-float"><p>Est. right here in</p><strong>Colchester</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">Who We Are</div>
+        <h2>A Club for People Who Love Wine (and Hate Pretension)</h2>
+        <p class="sec-intro">We started the Colchester Wine Club because we got tired of feeling like we needed a degree to enjoy a decent bottle. So we fixed it.</p>
+        <div class="about-points reveal">
+          <div class="ap"><div class="ap-icon ruby">🗺️</div><div><h4>We Explore the World</h4><p>Every month we pick bottles from different regions — from familiar French classics to exciting discoveries from Georgia, South Africa, and beyond.</p></div></div>
+          <div class="ap"><div class="ap-icon amber">📖</div><div><h4>We Speak Plain English</h4><p>Our tasting notes are written by humans for humans. "Dark fruit and a smooth finish" — not "notes of sun-baked Mediterranean schist." You're welcome.</p></div></div>
+          <div class="ap"><div class="ap-icon sage">🎉</div><div><h4>We Make Nights Out of It</h4><p>Tastings, themed evenings, and socials around Colchester. Come solo, bring a friend, or drag your partner along. Everyone fits in here.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE TO BUY -->
+<section class="wines-bg" id="wines">
+  <div class="max-w">
+    <div class="sec-label">Where to Get the Wines</div>
+    <h2>Bought Through Streetwines 🍾</h2>
+    <p class="sec-intro">All our recommended wines are sold by Streetwines right here in Colchester. Get in touch with Aaron or Neils — they'll sort you out.</p>
+    <div class="partner-card reveal">
+      <div class="partner-logo-area">
+        <span class="partner-emoji">🍷</span>
+        <div class="partner-name">Streetwines</div>
+        <div class="partner-location">📍 Colchester, Essex</div>
+      </div>
+      <div>
+        <p class="partner-desc">Streetwines are our trusted wine partner here in Colchester. Every bottle we recommend at club events and on our Instagram can be sourced through them. Knowledgeable, friendly, and properly good at what they do — just get in touch with Aaron or Neils and tell them the Colchester Wine Club sent you.</p>
+        <div class="partner-contacts">
+          <div class="partner-contact">
+            <div class="pc-icon">👤</div>
+            <div>
+              <div class="pc-label">Get in touch with</div>
+              <div class="pc-name">Aaron</div>
+              <div class="pc-role">Wine Expert · Streetwines Colchester</div>
+              <a href="tel:07407184948" style="font-size:0.85rem;color:var(--amber-lt);font-weight:600;text-decoration:none;">📞 07407 184948</a>
+            </div>
+          </div>
+          <div class="partner-contact">
+            <div class="pc-icon">👤</div>
+            <div>
+              <div class="pc-label">Get in touch with</div>
+              <div class="pc-name">Neils</div>
+              <div class="pc-role">Wine Expert · Streetwines Colchester</div>
+              <a href="tel:07921128950" style="font-size:0.85rem;color:var(--amber-lt);font-weight:600;text-decoration:none;">📞 07921 128950</a>
+            </div>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/colchester_wine_club" target="_blank" class="partner-cta">📸 Find them via our Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-bg" id="how">
+  <div class="max-w">
+    <div class="sec-label">Getting Started</div>
+    <h2>Joining Is Simple</h2>
+    <p class="sec-intro">No membership forms. No wine exams. Here's all you need to know.</p>
+    <div class="steps-grid reveal">
+      <div class="step-card"><div class="step-num">01</div><span class="step-icon">📱</span><h3>Follow Us</h3><p>Start on Instagram — that's where we share monthly picks, event news, and the occasional spirited debate about whether Malbec goes with a takeaway.</p></div>
+      <div class="step-card"><div class="step-num">02</div><span class="step-icon">🎟️</span><h3>Come to an Event</h3><p>Check out our upcoming events and grab a ticket. No pressure to come every month — just show up when it suits you.</p></div>
+      <div class="step-card"><div class="step-num">03</div><span class="step-icon">🍷</span><h3>Taste &amp; Learn</h3><p>At events we taste wines together and talk about them in plain English. You'll leave knowing more and loving wine even more.</p></div>
+      <div class="step-card"><div class="step-num">04</div><span class="step-icon">👯</span><h3>You're One of Us</h3><p>You'll meet brilliant people who love a glass as much as you do. That's kind of the whole point, honestly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="max-w">
+    <div class="sec-label">Get Out &amp; Meet People</div>
+    <h2>Upcoming Events 2025</h2>
+    <p class="sec-intro">Tastings, dinners, and wine nights around Colchester. Every event includes <strong>7+ wines</strong>, local meats &amp; cheese with bread and dips — all for <strong>£25 per ticket</strong>.</p>
+
+    <!-- What's included banner -->
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:2rem 0;padding:1.4rem 1.8rem;background:rgba(139,26,46,0.06);border:1px solid rgba(139,26,46,0.12);border-radius:14px;align-items:center;">
+      <span style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--ruby);flex-shrink:0;">Every ticket includes:</span>
+      <span style="font-size:0.85rem;color:var(--muted);display:flex;align-items:center;gap:0.4rem;">🍷 7+ wines to taste</span>
+      <span style="font-size:0.85rem;color:var(--muted);display:flex;align-items:center;gap:0.4rem;">🧀 Local meats &amp; cheese</span>
+      <span style="font-size:0.85rem;color:var(--muted);display:flex;align-items:center;gap:0.4rem;">🍞 Bread &amp; dips</span>
+      <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="margin-left:auto;background:var(--ruby);color:white;font-size:0.88rem;font-weight:700;padding:0.4rem 1.1rem;border-radius:20px;flex-shrink:0;text-decoration:none;">🎟 Buy Tickets — £25</a>
+    </div>
+
+    <div class="events-grid reveal">
+
+      <!-- MAY 27 -->
+      <div class="event-card">
+        <div class="event-top">
+          <div class="event-date"><div class="day">27</div><div class="mon">May</div></div>
+          <div><div class="event-title">French Wines Only 🇫🇷</div><div class="event-subtitle">May Evening</div></div>
+        </div>
+        <div class="event-body">
+          <p>Ooh la la. A full evening dedicated to France — Burgundy, Bordeaux, Loire and more. The country that basically invented wine snobbery, tackled with zero snobbery. Naturellement.</p>
+          <div class="event-meta">
+            <span>📍 Colchester</span>
+            <span>📅 27th May 2025</span>
+            <span>🍷 7+ wines</span>
+          </div>
+          <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;background:var(--ruby);color:white;padding:0.65rem 1.4rem;border-radius:25px;font-weight:700;font-size:0.82rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--ruby-deep)'" onmouseout="this.style.background='var(--ruby)'">🎟 Get Tickets — £25</a>
+        </div>
+      </div>
+
+      <!-- JUN 18 -->
+      <div class="event-card">
+        <div class="event-top">
+          <div class="event-date"><div class="day">18</div><div class="mon">Jun</div></div>
+          <div><div class="event-title">Italian Wines 🇮🇹</div><div class="event-subtitle">June Evening</div></div>
+        </div>
+        <div class="event-body">
+          <p>From Tuscany's rolling hills to the sun-baked south — Italy makes some of the world's most exciting wines. Expect big reds, crisp whites and a lot of enthusiastic gesturing. Salute!</p>
+          <div class="event-meta">
+            <span>📍 Colchester</span>
+            <span>📅 18th June 2025</span>
+            <span>🍷 7+ wines</span>
+          </div>
+          <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;background:var(--ruby);color:white;padding:0.65rem 1.4rem;border-radius:25px;font-weight:700;font-size:0.82rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--ruby-deep)'" onmouseout="this.style.background='var(--ruby)'">🎟 Get Tickets — £25</a>
+        </div>
+      </div>
+
+      <!-- JUL 23 -->
+      <div class="event-card">
+        <div class="event-top">
+          <div class="event-date"><div class="day">23</div><div class="mon">Jul</div></div>
+          <div><div class="event-title">Local Growers 🌿</div><div class="event-subtitle">July Evening</div></div>
+        </div>
+        <div class="event-body">
+          <p>England — and Essex in particular — is quietly making brilliant wine. This evening celebrates local and British growers. Prepare to be genuinely surprised at what's on your doorstep.</p>
+          <div class="event-meta">
+            <span>📍 Colchester</span>
+            <span>📅 23rd July 2025</span>
+            <span>🍷 7+ wines</span>
+          </div>
+          <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;background:var(--ruby);color:white;padding:0.65rem 1.4rem;border-radius:25px;font-weight:700;font-size:0.82rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--ruby-deep)'" onmouseout="this.style.background='var(--ruby)'">🎟 Get Tickets — £25</a>
+        </div>
+      </div>
+
+      <!-- AUG -->
+      <div class="event-card">
+        <div class="event-top">
+          <div class="event-date"><div class="day" style="font-size:1.2rem;">Aug</div><div class="mon">2025</div></div>
+          <div><div class="event-title">Sparkling, Whites &amp; Rosé 🥂</div><div class="event-subtitle">August Evening</div></div>
+        </div>
+        <div class="event-body">
+          <p>Peak summer deserves peak summer wines. An evening of bubbles, crisp whites and gorgeous rosés — because August absolutely demands it. Date to be confirmed on Instagram.</p>
+          <div class="event-meta">
+            <span>📍 Colchester</span>
+            <span>📅 August 2025 — date TBC</span>
+            <span>🍷 7+ wines</span>
+          </div>
+          <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;background:var(--ruby);color:white;padding:0.65rem 1.4rem;border-radius:25px;font-weight:700;font-size:0.82rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--ruby-deep)'" onmouseout="this.style.background='var(--ruby)'">🎟 Get Tickets — £25</a>
+        </div>
+      </div>
+
+      <!-- SEP -->
+      <div class="event-card">
+        <div class="event-top">
+          <div class="event-date"><div class="day" style="font-size:1.2rem;">Sep</div><div class="mon">2025</div></div>
+          <div><div class="event-title">This Year's Favourites 🏆</div><div class="event-subtitle">September Grand Finale</div></div>
+        </div>
+        <div class="event-body">
+          <p>The big one. We bring back the absolute best bottles from every event this year — the crowd-pleasers, the surprise hits, the bottles everyone asked about. The perfect end to the season.</p>
+          <div class="event-meta">
+            <span>📍 Colchester</span>
+            <span>📅 September 2025 — date TBC</span>
+            <span>🍷 7+ wines</span>
+          </div>
+          <a href="https://www.ticketsource.co.uk/street-wines" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;background:var(--ruby);color:white;padding:0.65rem 1.4rem;border-radius:25px;font-weight:700;font-size:0.82rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='var(--ruby-deep)'" onmouseout="this.style.background='var(--ruby)'">🎟 Get Tickets — £25</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="events-footer">
+      <p>Tickets available at <a href="https://www.ticketsource.co.uk/street-wines" target="_blank">ticketsource.co.uk/street-wines</a> · Follow us on Instagram for venue announcements — <a href="https://www.instagram.com/colchester_wine_club" target="_blank">@colchester_wine_club</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="insta-bg" id="insta">
+  <div class="max-w">
+    <div class="insta-header">
+      <div>
+        <div class="sec-label">Follow Along</div>
+        <h2>We're on Instagram</h2>
+        <p class="sec-intro">Events, monthly picks, bottle shots, and genuinely honest wine opinions. Come say hello.</p>
+      </div>
+      <a href="https://www.instagram.com/colchester_wine_club" target="_blank" class="insta-follow-btn">📸 Follow Us</a>
+    </div>
+    <div class="insta-mosaic reveal">
+      <div class="insta-tile tall" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🍷</div>
+      <div class="insta-tile wide" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🥂</div>
+      <div class="insta-tile" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🍾</div>
+      <div class="insta-tile" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🍇</div>
+      <div class="insta-tile" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🎉</div>
+      <div class="insta-tile wide" onclick="window.open('https://www.instagram.com/colchester_wine_club','_blank')">🌍</div>
+    </div>
+    <p class="insta-handle">Find us at <a href="https://www.instagram.com/colchester_wine_club" target="_blank">@colchester_wine_club</a></p>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section class="join-bg" id="join">
+  <div class="max-w">
+    <div class="join-inner">
+      <div>
+        <h2>Ready to Join the Club?</h2>
+        <p>No wine knowledge needed. No snobbery. Just brilliant evenings with people who love a good bottle as much as you do. Colchester, this is your wine club.</p>
+      </div>
+      <div class="join-actions">
+        <a href="https://www.instagram.com/colchester_wine_club" target="_blank" class="join-btn-dark">📸 Follow on Instagram</a>
+        <a href="mailto:hello@colchesterwineclub.co.uk" class="join-btn-light">✉️ Get in Touch</a>
+        <p class="join-note">Or just show up to an event — we don't bite 🍷</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="max-w">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span style="font-family:'Fraunces',serif;font-weight:700;color:white;font-size:1.3rem;display:block;margin-bottom:0.8rem;">Colchester Wine Club</span>
+        <p>Colchester's friendliest wine club. No snobbery, no waffle — just great wine and good people in Essex.</p>
+        <div class="footer-social"><a href="https://www.instagram.com/colchester_wine_club" target="_blank">📸 @colchester_wine_club</a></div>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About the Club</a></li>
+          <li><a href="#wines">Get the Wines</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#events">Upcoming Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/colchester_wine_club" target="_blank">Instagram</a></li>
+          <li><a href="mailto:hello@colchesterwineclub.co.uk">Email Us</a></li>
+          <li><a href="#join">Join the Club</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="https://colchesterwineclub.co.uk">colchesterwineclub.co.uk</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Colchester Wine Club. All rights reserved.</p>
+      <p class="age-notice">🔞 Please drink responsibly. Must be 18+ to consume alcohol.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
